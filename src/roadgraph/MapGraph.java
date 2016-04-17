@@ -128,7 +128,6 @@ public class MapGraph {
      */
     public List<GeographicPoint> bfs(GeographicPoint start,
                                      GeographicPoint goal, Consumer<GeographicPoint> nodeSearched) {
-        // TODO: Implement this method in WEEK 2
         Queue<MapNode> queue = new LinkedList<>();
         HashSet<MapNode> visited = new HashSet<>();
         HashMap<MapNode, MapNode> parent = new HashMap<>();
