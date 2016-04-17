@@ -98,7 +98,7 @@ public class MapGraph {
     public void addEdge(GeographicPoint from, GeographicPoint to, String roadName,
                         String roadType, double length) throws IllegalArgumentException {
         MapNode curNode = nodeMap.get(from);
-        if (!curNode.addEdge(from, to, roadName, roadType, length)) return;
+        if (!curNode.addEdge(from, to, roadName, roadType, length)) throw new IllegalArgumentException("Wrong input");
     }
 
 
