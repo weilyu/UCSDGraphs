@@ -11,10 +11,12 @@ import java.util.List;
 public class MapNode {
     private GeographicPoint location;
     private List<MapEdge> edges;
+    private List<MapNode> neighbors;
 
     public MapNode(GeographicPoint location) {
         this.location = location;
         edges = new ArrayList<>();
+        neighbors = new ArrayList<>();
     }
 
     public int countEdges() {
@@ -31,4 +33,15 @@ public class MapNode {
         return true;
     }
 
+    public GeographicPoint getLocation() {
+        return location;
+    }
+
+    public List<MapNode> getNeighbors() {
+        return neighbors;
+    }
+
+    public void addNeighbor(MapNode neighbor) {
+        neighbors.add(neighbor);
+    }
 }

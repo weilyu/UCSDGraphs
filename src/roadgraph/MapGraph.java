@@ -10,9 +10,7 @@ package roadgraph;
 import geography.GeographicPoint;
 import util.GraphLoader;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 
 /**
@@ -98,7 +96,9 @@ public class MapGraph {
     public void addEdge(GeographicPoint from, GeographicPoint to, String roadName,
                         String roadType, double length) throws IllegalArgumentException {
         MapNode curNode = nodeMap.get(from);
-        if (!curNode.addEdge(from, to, roadName, roadType, length)) throw new IllegalArgumentException("Wrong input");
+        if (!curNode.addEdge(from, to, roadName, roadType, length)) {
+            throw new IllegalArgumentException("Wrong input");
+        } else curNode.addNeighbor(nodeMap.get(to));
     }
 
 
@@ -129,6 +129,29 @@ public class MapGraph {
     public List<GeographicPoint> bfs(GeographicPoint start,
                                      GeographicPoint goal, Consumer<GeographicPoint> nodeSearched) {
         // TODO: Implement this method in WEEK 2
+        Queue<MapNode> queue = new LinkedList<>();
+        HashSet<MapNode> visited = new HashSet<>();
+        HashMap<MapNode, MapNode> parent = new HashMap<>();
+
+        MapNode startNode = nodeMap.get(start);
+        MapNode goalNode = nodeMap.get(goal);
+        queue.add(startNode);
+        visited.add(startNode);
+
+        while (queue.size() > 0) {
+            MapNode curNode = queue.poll();
+            nodeSearched.accept(curNode.getLocation());
+            if (curNode.equals(goalNode)) return getPath(startNode, goalNode, parent);
+
+            List<MapNode> neighbors = curNode.getNeighbors();
+            for (MapNode neighbor : neighbors) {
+                if (!visited.contains(neighbor)) {
+                    visited.add(neighbor);
+                    parent.put(neighbor, curNode);
+                    queue.add(neighbor);
+                }
+            }
+        }
 
         // Hook for visualization.  See writeup.
         //nodeSearched.accept(next.getLocation());
@@ -136,6 +159,20 @@ public class MapGraph {
         return null;
     }
 
+    private List<GeographicPoint> getPath(MapNode startNode, MapNode goalNode, HashMap<MapNode, MapNode> parent) {
+        ArrayList<GeographicPoint> path = new ArrayList<>();
+        MapNode curNode = goalNode;
+        while (true) {
+            if (curNode.equals(startNode)) {
+                path.add(curNode.getLocation());
+                break;
+            }
+            path.add(curNode.getLocation());
+            curNode = parent.get(curNode);
+        }
+        Collections.reverse(path);
+        return path;
+    }
 
     /**
      * Find the path from start to goal using Dijkstra's algorithm
