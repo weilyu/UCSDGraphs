@@ -224,7 +224,7 @@ public class MapGraph {
             if (!visited.contains(curr)) {
                 visited.add(curr);
                 nodeSearched.accept(curr.getLocation());
-                if (curr == goalNode){
+                if (curr == goalNode) {
                     System.out.println(count);
                     return getPath(startNode, goalNode, parent);
                 }
@@ -294,7 +294,7 @@ public class MapGraph {
             if (!visited.contains(curr)) {
                 visited.add(curr);
                 nodeSearched.accept(curr.getLocation());
-                if (curr == goalNode){
+                if (curr == goalNode) {
                     System.out.println(count);
                     return getPath(startNode, goalNode, parent);
                 }
@@ -331,17 +331,16 @@ public class MapGraph {
 
 
         MapGraph theMap1 = new MapGraph();
-		System.out.print("DONE. \nLoading the map...");
-		GraphLoader.loadRoadMap("data/maps/utc.map", theMap1);
-		System.out.println("DONE.");
+        System.out.print("DONE. \nLoading the map...");
+        GraphLoader.loadRoadMap("data/maps/utc.map", theMap1);
+        System.out.println("DONE.");
 
-		GeographicPoint start = new GeographicPoint(32.8648772, -117.2254046);
-		GeographicPoint end = new GeographicPoint(32.8660691, -117.217393);
-		
-		
-		List<GeographicPoint> route = theMap1.dijkstra(start,end);
-		List<GeographicPoint> route2 = theMap1.aStarSearch(start,end);
+        GeographicPoint start = new GeographicPoint(32.8648772, -117.2254046);
+        GeographicPoint end = new GeographicPoint(32.8660691, -117.217393);
 
+
+        List<GeographicPoint> route = theMap1.dijkstra(start, end);
+        List<GeographicPoint> route2 = theMap1.aStarSearch(start, end);
 
 
     }
