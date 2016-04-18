@@ -200,7 +200,6 @@ public class MapGraph {
      */
     public List<GeographicPoint> dijkstra(GeographicPoint start,
                                           GeographicPoint goal, Consumer<GeographicPoint> nodeSearched) {
-        // TODO: Implement this method in WEEK 3
         MapNode startNode = nodeMap.get(start);
         MapNode goalNode = nodeMap.get(goal);
         if (startNode == null || goalNode == null) {
