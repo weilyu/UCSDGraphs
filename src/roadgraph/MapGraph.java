@@ -267,8 +267,41 @@ public class MapGraph {
      */
     public List<GeographicPoint> aStarSearch(GeographicPoint start,
                                              GeographicPoint goal, Consumer<GeographicPoint> nodeSearched) {
-        // TODO: Implement this method in WEEK 3
+        MapNode startNode = nodeMap.get(start);
+        MapNode goalNode = nodeMap.get(goal);
+        if (startNode == null || goalNode == null) {
+            throw new NullPointerException("Null start/goal");
+        }
 
+        //initialize
+        PriorityQueue<MapNode> pq = new PriorityQueue<>();
+        HashSet<MapNode> visited = new HashSet<>();
+        HashMap<MapNode, MapNode> parent = new HashMap<>();
+        for (MapNode mn : nodeMap.values()) {
+            mn.setDistance(Double.MAX_VALUE);
+        }
+
+        pq.add(startNode);
+
+        while (!pq.isEmpty()) {
+            MapNode curr = pq.poll();
+            if (!visited.contains(curr)) {
+                visited.add(curr);
+                nodeSearched.accept(curr.getLocation());
+                if (curr == goalNode) return getPath(startNode, goalNode, parent);
+                for (MapNode n : curr.getNeighbors()) {
+                    if (!visited.contains(n)) {
+                        GeographicPoint nLoc = n.getLocation();
+                        double distanceN = nLoc.distance(start) + nLoc.distance(goal);
+                        if (distanceN < n.getDistance()) {
+                            n.setDistance(distanceN);
+                            parent.put(n, curr);
+                            pq.add(n);
+                        }
+                    }
+                }
+            }
+        }
         // Hook for visualization.  See writeup.
         //nodeSearched.accept(next.getLocation());
 
