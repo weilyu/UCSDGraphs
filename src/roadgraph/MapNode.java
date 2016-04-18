@@ -3,9 +3,7 @@ package roadgraph;
 import geography.GeographicPoint;
 
 import java.util.ArrayList;
-import java.util.DoubleSummaryStatistics;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by lvwei on 2016/04/17.
@@ -15,6 +13,7 @@ public class MapNode implements Comparable<MapNode> {
     private List<MapEdge> edges;
     private List<MapNode> neighbors;
     private double distance;
+    private double actDis;
 
     public MapNode(GeographicPoint location) {
         this.location = location;
@@ -71,5 +70,13 @@ public class MapNode implements Comparable<MapNode> {
     @Override
     public int compareTo(MapNode o) {
         return Double.compare(distance, o.getDistance());
+    }
+
+    public double getActDis() {
+        return actDis;
+    }
+
+    public void setActDis(double actDis) {
+        this.actDis = actDis;
     }
 }

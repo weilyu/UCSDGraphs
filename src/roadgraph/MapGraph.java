@@ -301,9 +301,11 @@ public class MapGraph {
                 for (MapNode n : curr.getNeighbors()) {
                     if (!visited.contains(n)) {
                         GeographicPoint nLoc = n.getLocation();
-                        double distanceN = nLoc.distance(start) + nLoc.distance(goal);
-                        if (distanceN < n.getDistance()) {
-                            n.setDistance(distanceN);
+                        double startToN = curr.getActDis() + curr.getDistanceTo(n);
+                        double disPre = startToN + nLoc.distance(goal);
+                        if (disPre < n.getDistance()) {
+                            n.setDistance(disPre);
+                            n.setActDis(startToN);
                             parent.put(n, curr);
                             pq.add(n);
                         }
