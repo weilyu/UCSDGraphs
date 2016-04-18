@@ -23,4 +23,8 @@ public class MapEdge {
     public double getLength() {
         return length;
     }
+
+    public GeographicPoint getTo() {
+        return to;
+    }
 }
