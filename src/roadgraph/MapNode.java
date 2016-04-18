@@ -44,4 +44,15 @@ public class MapNode {
     public void addNeighbor(MapNode neighbor) {
         neighbors.add(neighbor);
     }
+
+    public double getDistance(MapNode to) {
+        if (!neighbors.contains(to)) throw new IllegalArgumentException("Cannot find path");
+        GeographicPoint toLocation = to.getLocation();
+        for (MapEdge me : edges) {
+            if (me.getTo().equals(toLocation)) {
+                return me.getLength();
+            }
+        }
+        return 0;
+    }
 }
