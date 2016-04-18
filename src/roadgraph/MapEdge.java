@@ -19,4 +19,8 @@ public class MapEdge {
         this.roadType = roadType;
         this.length = length;
     }
+
+    public double getLength() {
+        return length;
+    }
 }
