@@ -201,7 +201,41 @@ public class MapGraph {
     public List<GeographicPoint> dijkstra(GeographicPoint start,
                                           GeographicPoint goal, Consumer<GeographicPoint> nodeSearched) {
         // TODO: Implement this method in WEEK 3
+        MapNode startNode = nodeMap.get(start);
+        MapNode goalNode = nodeMap.get(goal);
+        if (startNode == null || goalNode == null) {
+            throw new NullPointerException("Null start/goal");
+        }
 
+        //initialize
+        PriorityQueue<MapNode> pq = new PriorityQueue<>();
+        HashSet<MapNode> visited = new HashSet<>();
+        HashMap<MapNode, MapNode> parent = new HashMap<>();
+        for (MapNode mn : nodeMap.values()) {
+            mn.setDistance(Double.MAX_VALUE);
+        }
+
+        startNode.setDistance(0);
+        pq.add(startNode);
+
+        while (!pq.isEmpty()) {
+            MapNode curr = pq.poll();
+            if (!visited.contains(curr)) {
+                visited.add(curr);
+                nodeSearched.accept(curr.getLocation());
+                if (curr == goalNode) return getPath(startNode, goalNode, parent);
+                for (MapNode n : curr.getNeighbors()) {
+                    if (!visited.contains(n)) {
+                        double pathToN = curr.getDistance() + curr.getDistanceTo(n);
+                        if (pathToN < n.getDistance()) {
+                            n.setDistance(pathToN);
+                            parent.put(n, curr);
+                            pq.add(n);
+                        }
+                    }
+                }
+            }
+        }
         // Hook for visualization.  See writeup.
         //nodeSearched.accept(next.getLocation());
 
