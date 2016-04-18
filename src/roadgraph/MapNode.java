@@ -70,6 +70,6 @@ public class MapNode implements Comparable<MapNode> {
 
     @Override
     public int compareTo(MapNode o) {
-        return 0 - Double.compare(distance, o.getDistance());
+        return Double.compare(distance, o.getDistance());
     }
 }
